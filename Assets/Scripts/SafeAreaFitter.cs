@@ -1,3 +1,5 @@
+
+// UI 상단 Safe Area 확보 
 using UnityEngine;
 
 public class SafeAreaFitter : MonoBehaviour
@@ -15,14 +17,14 @@ public class SafeAreaFitter : MonoBehaviour
         Apply();
     }
 
-    // 변화 감지 > 적용
+    // 변화 감지 > Safe Area 적용
     private void Update()
     {
         if (Screen.safeArea != lastSafeArea || Screen.orientation != lastOrientation)
             Apply();
     }
 
-    // Safe Area 설정
+    // Safe Area 적용 함수
     private void Apply()
     {
         // 기기의 Safe Area 가져오기
