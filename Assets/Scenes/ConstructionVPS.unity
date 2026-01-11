@@ -1514,7 +1514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe5f20aabadc6647ad9c69198ebe82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arSession: {fileID: 1071482129}
   raycastManager: {fileID: 322393158}
   pinsTransform: {fileID: 1610249231}
   pinPrefab: {fileID: 5100438823836458813, guid: 7b29d551130967c4b9ca6894c9f3e6d8, type: 3}
