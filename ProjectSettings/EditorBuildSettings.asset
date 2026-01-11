@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: af1e23269fb55b24f904fb3f17840e3f
   - enabled: 1
+    path: Assets/Scenes/MapBrowser.unity
+    guid: 392eb4ba6314dc64ea3925884221df04
+  - enabled: 1
     path: Assets/Scenes/ConstructionVPS.unity
-    guid: 5028d68f840a1fc47ac2e3b9c846de1b
+    guid: 201ce0f66ee68b9428936aff78a8611a
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6d4e980ff41b75c42a22b65652739412, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 50bf572cde4ed4049a3e2563df1fe7b2, type: 2}
