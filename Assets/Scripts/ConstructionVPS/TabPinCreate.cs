@@ -1,5 +1,4 @@
-﻿
-// 탭으로 AR 화면에 핀 생성, 맵별 파일(pins_{mapId}.json)형태로 저장/복원/삭제
+﻿// 탭으로 AR 화면에 핀 생성, 맵별 파일(pins_{mapId}.json)형태로 저장/복원/삭제
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +21,10 @@ public class TabPinCreate : MonoBehaviour
     [Header("Pin Prefab")]
     [Tooltip("탭 시 만들 Pin Prefab을 넣는 자리")]
     [SerializeField] private GameObject pinPrefab;
+
+    [Header("Memo UI (BottomBar Controller)")] 
+    [Tooltip("Canvas > SafeArea > MemoUI 에 붙어있는 MemoUIController를 넣는 자리")]
+    [SerializeField] private MemoUIController memoUI;
 
     [Header("Map First Name")]
     [Tooltip("맵별로 저장될 파일 앞 이름 적는 자리")]
@@ -226,6 +229,17 @@ public class TabPinCreate : MonoBehaviour
         GameObject pin = Instantiate(pinPrefab);
         pin.transform.SetPositionAndRotation(hitPose.position, hitPose.rotation);
         pin.transform.SetParent(pinsTransform, worldPositionStays: true);
+
+        // 메모 부착(생성) 순간에 하단바를 띄우기
+        if (memoUI != null)
+        {
+            memoUI.OnMemoPlaced(pin);
+        }
+        else
+        {
+            if (verboseDebug)
+                Debug.LogWarning("[TabPinCreate] memoUI is null. Assign MemoUIController in inspector.");
+        }
 
         // 핀을 현재 mapId로 저장
         PinData data = new PinData

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.immersal.core": "https://github.com/immersal/imdk-unity.git#2.0.2",
+    "com.nobi.roundedcorners": "https://github.com/kirevdokimov/Unity-UI-Rounded-Corners.git",
     "com.unity.collab-proxy": "2.11.2",
     "com.unity.feature.development": "1.0.1",
     "com.unity.mobile.android-logcat": "1.4.6",

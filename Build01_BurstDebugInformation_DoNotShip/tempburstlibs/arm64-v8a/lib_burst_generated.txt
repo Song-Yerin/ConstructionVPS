@@ -15,6 +15,7 @@ Library: D:\HONGIK\3_2_Vacation\MemoAnchor\Work2\ConstructionVPS\Temp\BurstOutpu
 --assembly-defines=ImmersalSDK;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
+--assembly-defines=Nobi.UiRoundedCorners;
 --assembly-defines=System.Configuration;
 --assembly-defines=System.Core;
 --assembly-defines=System;
@@ -70,6 +71,7 @@ Library: D:\HONGIK\3_2_Vacation\MemoAnchor\Work2\ConstructionVPS\Temp\BurstOutpu
 --assembly-defines=ImmersalSDK;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
+--assembly-defines=Nobi.UiRoundedCorners;
 --assembly-defines=System.Configuration;
 --assembly-defines=System.Core;
 --assembly-defines=System;
