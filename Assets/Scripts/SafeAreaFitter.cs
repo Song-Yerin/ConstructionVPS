@@ -1,54 +1,54 @@
 
-// UI »ó´Ü Safe Area È®º¸ 
+// UI ìƒë‹¨ Safe Area í™•ë³´ 
 using UnityEngine;
 
 public class SafeAreaFitter : MonoBehaviour
 {
-    // È­¸é µ¥ÀÌÅÍ ÀúÀå Àå¼Ò
+    // í™”ë©´ ë°ì´í„° ì €ì¥ ì¥ì†Œ
     private RectTransform rt;                     
     private Rect lastSafeArea;                    
     private ScreenOrientation lastOrientation;    
 
 
-    // ÃÊ±â Safe Area Àû¿ë
+    // ì´ˆê¸° Safe Area ì ìš©
     private void Awake()
     {
         rt = GetComponent<RectTransform>();       
         Apply();
     }
 
-    // º¯È­ °¨Áö > Safe Area Àû¿ë
+    // ë³€í™” ê°ì§€ > Safe Area ì ìš©
     private void Update()
     {
         if (Screen.safeArea != lastSafeArea || Screen.orientation != lastOrientation)
             Apply();
     }
 
-    // Safe Area Àû¿ë ÇÔ¼ö
+    // Safe Area ì ìš© í•¨ìˆ˜
     private void Apply()
     {
-        // ±â±âÀÇ Safe Area °¡Á®¿À±â
-        Rect sa = Screen.safeArea;        // OS¿¡¼­ Á¦°øÇÏ´Â Safe Area Á¤º¸ ¾ò±â À§ÇÔ
+        // ê¸°ê¸°ì˜ Safe Area ê°€ì ¸ì˜¤ê¸°
+        Rect sa = Screen.safeArea;        // OSì—ì„œ ì œê³µí•˜ëŠ” Safe Area ì •ë³´ ì–»ê¸° ìœ„í•¨
 
-        // Safe Area ºñ±³ ±âÁØ ¸¸µé±â
+        // Safe Area ë¹„êµ ê¸°ì¤€ ë§Œë“¤ê¸°
         lastSafeArea = sa;
         lastOrientation = Screen.orientation;
 
-        // Safe Area ÇÈ¼¿ ÁÂÇ¥ ¾ò±â
+        // Safe Area í”½ì…€ ì¢Œí‘œ ì–»ê¸°
         Vector2 anchorMin = sa.position;
         Vector2 anchorMax = sa.position + sa.size;
 
-        // ¾ŞÄ¿ % °ª ¾ò±â
+        // ì•µì»¤ % ê°’ ì–»ê¸°
         anchorMin.x /= Screen.width;
         anchorMin.y /= Screen.height;
         anchorMax.x /= Screen.width;
         anchorMax.y /= Screen.height;
 
-        // Safe Area ¼³Á¤
+        // Safe Area ì„¤ì •
         rt.anchorMin = anchorMin;
         rt.anchorMax = anchorMax;
 
-        // À¯´ÏÆ¼¿¡¼­ ÀÚµ¿À¸·Î ¸¸µå´Â ¿ÀÇÁ¼Â Á¦°Å
+        // ìœ ë‹ˆí‹°ì—ì„œ ìë™ìœ¼ë¡œ ë§Œë“œëŠ” ì˜¤í”„ì…‹ ì œê±°
         rt.offsetMin = Vector2.zero;
         rt.offsetMax = Vector2.zero;
     }

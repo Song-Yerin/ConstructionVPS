@@ -1,24 +1,27 @@
 
-// Pin¿¡ ÀúÀåµÉ ¸Ş¸ğ µ¥ÀÌÅÍ
+// í•€ì— ì €ì¥ë  ë©”ëª¨ ë°ì´í„°(ID, ì œëª©, ë³¸ë¬¸, ë‚´ìš©)ë¥¼ ë‹´ëŠ” ìŠ¤í¬ë¦½íŠ¸
 using UnityEngine;
 
 public class MemoData : MonoBehaviour
 {
     [Header("Identity")]
+    [Tooltip("ë©”ëª¨ì˜ ê³ ìœ  ID")]
     public string id;
 
     [Header("Text")]
+    [Tooltip("ë©”ëª¨ì˜ ì œëª©")]
     public string title;
 
-    // TabPinCreate°¡ ¾²´Â ÇÊµå¸í
+    [Tooltip("ë©”ëª¨ì˜ ë³¸ë¬¸")]
     public string body;
 
-    // ±âÁ¸ ÄÚµå°¡ content¸¦ ¾²´Â °æ¿ì ´ëºñ(È£È¯¿ë)
-    public string content;
+    [Tooltip("ë©”ëª¨ì˜ ë‚´ìš© (ë³¸ë¬¸ê³¼ ë™ì¼)")]
+    public string content; // í˜¸í™˜ì„± ìœ ì§€ë¥¼ ìœ„í•¨í•¨
 
+    // ë³¸ë¬¸ê³¼ ë‚´ìš© ë™ê¸°í™” í•¨ìˆ˜
     private void OnValidate()
     {
-        // µÑ Áß ÇÏ³ª¸¸ ¾²´õ¶óµµ µ¥ÀÌÅÍ°¡ ¾ù°¥¸®Áö ¾Ê°Ô µ¿±âÈ­
+
         if (string.IsNullOrEmpty(body) && !string.IsNullOrEmpty(content))
             body = content;
         else if (string.IsNullOrEmpty(content) && !string.IsNullOrEmpty(body))

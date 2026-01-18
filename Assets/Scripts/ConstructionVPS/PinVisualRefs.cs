@@ -1,17 +1,17 @@
 
-// ÇÉ ÇÁ¸®ÆÕ ¾ÈÀÇ ¾ÆÀÌÄÜ,ÅøÆÁ,Å¸ÀÌÆ²À» ÀÎ½ºÆåÅÍ¿¡¼­ Á÷Á¢ ¿¬°áÇØ,È®½ÇÇÏ°Ô Åä±Û/ÅØ½ºÆ® °»½ÅÀ» ÇÏµµ·Ï ÂüÁ¶
+// í•€ì´ í‘œì‹œì— í•„ìš”í•œ ìš”ì†Œ(ì•„ì´ì½˜, íˆ´íŒ, ì œëª© í…ìŠ¤íŠ¸)ë“¤ ì°¸ì¡°
 using TMPro;
 using UnityEngine;
 
 public class PinVisualRefs : MonoBehaviour
 {
-    [Header("Direct refs (assign in prefab)")]
-    [Tooltip("¾ÆÀÌÄÜ¸¸ º¸¿©ÁÖ´Â Canvas(¶Ç´Â ·çÆ® ¿ÀºêÁ§Æ®)")]
+    [Header("Visual Refs")]
+    [Tooltip("IconCanvas ë„£ëŠ” ìë¦¬")]
     public GameObject iconCanvas;
 
-    [Tooltip("ÅøÆÁÀ» º¸¿©ÁÖ´Â Canvas(¶Ç´Â ·çÆ® ¿ÀºêÁ§Æ®)")]
+    [Tooltip("TooltipCanvas ë„£ëŠ” ìë¦¬")]
     public GameObject tooltipCanvas;
 
-    [Tooltip("TooltipCanvas ¾ÈÀÇ Å¸ÀÌÆ² TMP_Text (¾øÀ¸¸é TabPinCreate°¡ ÀÚµ¿À¸·Î Ã£À½)")]
+    [Tooltip("TooltipCanvas ì•ˆì˜ íƒ€ì´í‹€ TMP_Text ë„£ëŠ” ìë¦¬ (ì—†ì–´ë„ ìë™ìœ¼ë¡œ ì°¾ìŒ)")]
     public TMP_Text titleText;
 }

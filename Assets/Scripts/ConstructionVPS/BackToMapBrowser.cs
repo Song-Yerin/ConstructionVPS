@@ -1,5 +1,5 @@
 
-// µÚ·Î°¡±â ÀÔ·ÂÀ» °¨ÁöÇÏ¸é, ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ®µéÀ» Á¤¸®ÇÑ µÚ MapBrowser ¾ÀÀ¸·Î ÀüÈ¯
+// ë’¤ë¡œê°€ê¸° ì…ë ¥ì„ ê°ì§€í•˜ë©´, í•„ìš”í•œ ì»´í¬ë„ŒíŠ¸ë“¤ì„ ì •ë¦¬í•œ ë’¤ MapBrowser ì”¬ìœ¼ë¡œ ì „í™˜
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
@@ -8,38 +8,38 @@ using UnityEngine.XR.ARFoundation;
 public class BackToMapBrowser : MonoBehaviour
 {
     [Header("Move Scene")]
-    [Tooltip("µÚ·Î°¡±â ¹öÆ°À» ÅÇ ÇÒ ¶§ ÀÌµ¿ÇÒ ¾À ÀÌ¸§À» Àû´Â ÀÚ¸®")]
+    [Tooltip("ë’¤ë¡œê°€ê¸° ë²„íŠ¼ì„ íƒ­ í•  ë•Œ ì´ë™í•  ì”¬ ì´ë¦„ì„ ì ëŠ” ìë¦¬")]
     [SerializeField] private string mapBrowserSceneName = "MapBrowser";
 
     [Header("Reset Element")]
-    [Tooltip("µÚ·Î°¡±â ¹öÆ°À» ÅÇ ÇÒ ¶§ ¸®¼Â ÇÒ ÄÄÆ÷³ÍÆ®¸¦ ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ë’¤ë¡œê°€ê¸° ë²„íŠ¼ì„ íƒ­ í•  ë•Œ ë¦¬ì…‹ í•  ì»´í¬ë„ŒíŠ¸ë¥¼ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private ARSession arSession;
 
-    [Tooltip("TabPinCreateÄÚµåÀÇ »óÅÂ ÃÊ±âÈ­ ¸Ş¼­µå È£ÃâÀ» À§ÇØ TabPinCreateÄÚµå¸¦ ³Ö´Â ÀÚ¸® ")]
+    [Tooltip("TabPinCreateì½”ë“œì˜ ìƒíƒœ ì´ˆê¸°í™” ë©”ì„œë“œ í˜¸ì¶œì„ ìœ„í•´ TabPinCreateì½”ë“œë¥¼ ë„£ëŠ” ìë¦¬ ")]
     [SerializeField] private TabPinCreate tabPinCreate;
 
-    [Tooltip("µÚ·Î°¡±â Á÷Àü¿¡ ¸ØÃß°í ½ÍÀº ÄÄÆ÷³ÍÆ®µéÀ» ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ë’¤ë¡œê°€ê¸° ì§ì „ì— ë©ˆì¶”ê³  ì‹¶ì€ ì»´í¬ë„ŒíŠ¸ë“¤ì„ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private MonoBehaviour[] disableOnBack;
 
     [Header("Android Back Key")]
-    [Tooltip("½º¸¶Æ®Æù¿¡¼­ µÚ·Î°¡±â Ã³¸® ¿©ºÎ ¼±ÅÃ ¹öÆ°")]
+    [Tooltip("ìŠ¤ë§ˆíŠ¸í°ì—ì„œ ë’¤ë¡œê°€ê¸° ì²˜ë¦¬ ì—¬ë¶€ ì„ íƒ ë²„íŠ¼")]
     [SerializeField] private bool handleAndroidBackKey = true;
 
-    // ¸Å ÇÁ·¹ÀÓ µÚ·Î°¡±â ÀÔ·Â °¨Áö > µÚ·Î °¡±â ½ÇÇà
+    // ë§¤ í”„ë ˆì„ ë’¤ë¡œê°€ê¸° ì…ë ¥ ê°ì§€ > ë’¤ë¡œ ê°€ê¸° ì‹¤í–‰
     private void Update()
     {
         if (!handleAndroidBackKey) return;
 
-        if (Input.GetKeyDown(KeyCode.Escape))  // ½º¸¶Æ®Æù ±âº» µÚ·Î°¡±â ¹öÆ°µµ °¨ÁöÇÏ±â À§ÇÔ
+        if (Input.GetKeyDown(KeyCode.Escape))  // ìŠ¤ë§ˆíŠ¸í° ê¸°ë³¸ ë’¤ë¡œê°€ê¸° ë²„íŠ¼ë„ ê°ì§€í•˜ê¸° ìœ„í•¨
             GoBack();
     }
 
-    // µÚ·Î °¡±â Ã³¸® ÇÔ¼ö
+    // ë’¤ë¡œ ê°€ê¸° ì²˜ë¦¬ í•¨ìˆ˜
     public void GoBack()
     {
         Debug.Log($"[BackToMapBrowser] GoBack > LoadScene({mapBrowserSceneName})");
 
-        // µÚ·Î°¡±â Á÷Àü¿¡ ¸ØÃß°í ½ÍÀº °Íµé ºñÈ°¼ºÈ­
+        // ë’¤ë¡œê°€ê¸° ì§ì „ì— ë©ˆì¶”ê³  ì‹¶ì€ ê²ƒë“¤ ë¹„í™œì„±í™”
         if (disableOnBack != null)
         {
             foreach (var mb in disableOnBack)
@@ -48,21 +48,21 @@ public class BackToMapBrowser : MonoBehaviour
             }
         }
 
-        // AR Æ®·¡Å·/¼¼¼Ç »óÅÂ¸¦ ÃÊ±âÈ­
+        // AR íŠ¸ë˜í‚¹/ì„¸ì…˜ ìƒíƒœë¥¼ ì´ˆê¸°í™”
         if (arSession)
         {
             arSession.Reset();
             Debug.Log("[BackToMapBrowser] ARSession.Reset()");
         }
 
-        // ÇÉ/¸Ş¸ğ º¹¿ø »óÅÂ ÃÊ±âÈ­
+        // í•€/ë©”ëª¨ ë³µì› ìƒíƒœ ì´ˆê¸°í™”
         if (tabPinCreate)
         {
             tabPinCreate.ResetRestorationState();
             Debug.Log("[BackToMapBrowser] TabPinCreate.ResetRestorationState()");
         }
 
-        // ¾À ÀÌµ¿
+        // ì”¬ ì´ë™
         SceneManager.LoadScene(mapBrowserSceneName);
     }
 }

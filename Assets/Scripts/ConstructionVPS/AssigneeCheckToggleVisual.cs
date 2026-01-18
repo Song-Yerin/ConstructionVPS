@@ -1,38 +1,42 @@
 ﻿
-// 탭 시 토글의 박스와 아이콘 색상 변환
+// 토글의 켜짐/꺼짐 상태에 따라 박스 및 아이콘 색상 변환
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AssigneeCheckToggleVisual : MonoBehaviour
 {
     [Header("Wiring")]
+    [Tooltip("토글 넣는 자리")]
     [SerializeField] private Toggle toggle;
 
-    [Tooltip("체크박스 배경(박스) Image")]
+    [Tooltip("체크박스 배경(박스) Image 넣는 자리")]
     [SerializeField] private Image boxImage;
 
-    [Tooltip("체크 아이콘 Image")]
+    [Tooltip("체크 아이콘 Image 넣는 자리")]
     [SerializeField] private Image checkIconImage;
 
     [Header("Colors")]
-    [Tooltip("기본(OFF) 박스 색상")]
+    // 토글 꺼졌을 때 색상
+    [Tooltip("기본(OFF) 박스 색상 넣는 자리")]
     [SerializeField] private Color boxOffColor = Color.white;
-
-    [Tooltip("기본(OFF) 아이콘 색상(검정)")]
+    [Tooltip("기본(OFF) 아이콘 색상(검정) 넣는 자리")]
     [SerializeField] private Color iconOffColor = Color.black;
 
-    [Tooltip("ON일 때 박스 색상(하늘색)")]
+    // 토글 켜졌을 때 색상
+    [Tooltip("ON일 때 박스 색상(하늘색) 넣는 자리")]
     [SerializeField] private Color boxOnColor = new Color(0.45f, 0.80f, 1.00f, 1.00f);
-
-    [Tooltip("ON일 때 아이콘 색상(흰색)")]
+    [Tooltip("ON일 때 아이콘 색상(흰색) 넣는 자리")]
     [SerializeField] private Color iconOnColor = Color.white;
 
+    // 토글 초기화 함수
     private void Reset()
     {
         toggle = GetComponent<Toggle>();
         if (toggle)
         {
-            // 흔한 기본 구조를 최대한 자동으로 찾아줌
+            // 필요 컴포넌트 자동 찾기기
             var bg = toggle.transform.Find("Background");
             if (bg) boxImage = bg.GetComponent<Image>();
             var ck = toggle.transform.Find("Background/Checkmark");
@@ -40,6 +44,7 @@ public class AssigneeCheckToggleVisual : MonoBehaviour
         }
     }
 
+    // 이벤트 등록 및 초기 색상 적용
     private void Awake()
     {
         if (!toggle) toggle = GetComponent<Toggle>();
@@ -52,6 +57,7 @@ public class AssigneeCheckToggleVisual : MonoBehaviour
         Apply(toggle != null && toggle.isOn);
     }
 
+    // 토글 상태에 따라 박스 및 아이콘 색상 변환 함수
     private void Apply(bool isOn)
     {
         if (boxImage) boxImage.color = isOn ? boxOnColor : boxOffColor;
@@ -59,8 +65,7 @@ public class AssigneeCheckToggleVisual : MonoBehaviour
         {
             checkIconImage.color = isOn ? iconOnColor : iconOffColor;
 
-            // OFF 상태에서도 "검은 체크 아이콘이 안에 있다" 요구사항 반영:
-            // 체크마크 자체를 끄지 않고 항상 보여준다.
+            // 아이콘 항상 보여줌줌
             checkIconImage.enabled = true;
         }
     }

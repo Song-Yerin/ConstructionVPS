@@ -1,4 +1,4 @@
-﻿
+
 // 탭으로 AR 화면에 핀 생성, 맵별 파일(pins_{mapId}.json)형태로 저장/복원/삭제
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class TabPinCreate : MonoBehaviour
 {
@@ -450,14 +450,6 @@ public class TabPinCreate : MonoBehaviour
 
         if (verboseDebug) Debug.Log($"[TabPinCreate] MemoData assigned id={memo.id}");
 
-        // PinDistanceView가 있으면 충돌 방지 위해 꺼두기 (TabPinCreate가 직접 토글함)
-        PinDistanceView view = pin.GetComponentInChildren<PinDistanceView>(true);
-        if (view != null)
-        {
-            view.enabled = false;
-            if (verboseDebug) Debug.Log("[TabPinCreate] PinDistanceView found -> disabled (TabPinCreate controls icon/tooltip)");
-        }
-
         // 생성 직후는 아이콘만 보여야 함
         SetPinVisual(pin.transform, showIcon: true, showTooltip: false);
 
@@ -545,11 +537,6 @@ public class TabPinCreate : MonoBehaviour
             memo.title = p.title ?? "";
             memo.body = p.body ?? "";
             memo.content = memo.body; // 호환 유지
-
-            // PinDistanceView가 있으면 충돌 방지 위해 꺼두기 (TabPinCreate가 직접 토글함)
-            PinDistanceView view = pin.GetComponentInChildren<PinDistanceView>(true);
-            if (view != null)
-                view.enabled = false;
 
             // 툴팁 타이틀 텍스트 동기화
             ApplyTooltipTitle(pin.transform, memo.title);

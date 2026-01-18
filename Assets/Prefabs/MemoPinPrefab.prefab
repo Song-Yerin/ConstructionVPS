@@ -157,7 +157,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4331545806647714897}
-  - component: {fileID: 6965917813115751125}
   - component: {fileID: 3062369621736935230}
   m_Layer: 0
   m_Name: MemoPinPrefab
@@ -182,27 +181,6 @@ Transform:
   - {fileID: 8954462879744158668}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6965917813115751125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3556713250737167239}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654c5a07269c8c941bed28e3b4ddb1dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconRoot: {fileID: 3470617340622098148}
-  tooltipRoot: {fileID: 0}
-  tooltipTitleText: {fileID: 0}
-  arCamera: {fileID: 0}
-  showTooltipDistanceMeters: 1.2
-  hideTooltipDistanceMeters: 1.4
-  distanceBasedAutoSwitch: 1
-  faceCamera: 1
-  billboardTarget: {fileID: 0}
 --- !u!114 &3062369621736935230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +399,6 @@ GameObject:
   - component: {fileID: 8954462879744158668}
   - component: {fileID: 5201046898918830589}
   - component: {fileID: 192429122217583645}
-  - component: {fileID: 474134666335122805}
   m_Layer: 0
   m_Name: MemoRoot
   m_TagString: Untagged
@@ -483,25 +460,6 @@ MonoBehaviour:
   title: 
   body: 
   content: 
---- !u!114 &474134666335122805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6395926702482096889}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4cf7d1deac7f240bee7183bb996b66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  iconRoot: {fileID: 3470617340622098148}
-  tooltipRoot: {fileID: 0}
-  tooltipTitleText: {fileID: 0}
-  showTooltipDistance: 1.2
-  hideTooltipDistance: 1.4
-  billboardToCamera: 1
 --- !u!1 &7374858296514529813
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
 
-// ÇöÀç ³¯Â¥/½Ã°£/»ç¿ëÀÚID Ç¥½Ã, ÀÔ·Â ½Ã Åä±Û º¯°æ ÈÄ ÀÌº¥Æ® Àü´Ş
+// ë©”ëª¨ ì‘ì„± ì‹œ ë©”íƒ€ì •ë³´ í‘œì‹œ, ë©”ëª¨ ì§€ì •ìë¥¼ ì…ë ¥ë°›ì•„ í™•ì •í•˜ëŠ” UI ì»¨íŠ¸ë¡¤ëŸ¬
 using System;
 using TMPro;
 using UnityEngine;
@@ -7,48 +7,48 @@ using UnityEngine.UI;
 
 public class MemoMetaUI : MonoBehaviour
 {
+    // UI ì°¸ì¡° ì»´í¬ë„ŒíŠ¸
     [Header("UI Refs")]
-    [Tooltip("¸Ş¸ğ Ã¢¿¡ ³¯Â¥/½Ã°£/»ç¿ëÀÚID¸¦ Ç¥½ÃÇÒ ÅØ½ºÆ®")]
+    [Tooltip("ë©”ëª¨ ì°½ì— ë‚ ì§œ/ì‹œê°„/ì‚¬ìš©ìIDë¥¼ í‘œì‹œí•  TMP_Text ë„£ëŠ” ìë¦¬")]
     [SerializeField] private TMP_Text metaText;
 
-    [Tooltip("ÁöÁ¤ÀÚ(¸Ş¸ğ¸¦ ºÁ¾ßÇÏ´Â »ç¶÷) ÀÔ·ÂÄ­")]
+    [Tooltip("ì§€ì •ì(ë©”ëª¨ë¥¼ ë´ì•¼í•˜ëŠ” ì‚¬ëŒ) ì…ë ¥ì¹¸ TMP_InputField ë„£ëŠ” ìë¦¬")]
     [SerializeField] private TMP_InputField assigneeInput;
 
-    [Tooltip("ÁöÁ¤ÀÚ ÀÔ·Â ½Ã ³ªÅ¸³¯ Ã¼Å© ¹öÆ°(±âº» ºñÈ°¼º ±ÇÀå)")]
+    [Tooltip("ì§€ì •ì ì…ë ¥ ì‹œ ë‚˜íƒ€ë‚  ì²´í¬ ë²„íŠ¼(í† ê¸€) Button ë„£ëŠ” ìë¦¬")]
     [SerializeField] private Button assigneeCheckButton;
 
+    // ì‚¬ìš©ì ID ê´€ë ¨ ì„¤ì •
     [Header("User Id Source")]
-    [Tooltip("PlayerPrefs¿¡¼­ »ç¿ëÀÚ ID¸¦ ÀĞÀ» Å°(¾øÀ¸¸é deviceUniqueIdentifier·Î ´ëÃ¼)")]
+    [Tooltip("PlayerPrefsì—ì„œ ì‚¬ìš©ì IDë¥¼ ì½ì„ í‚¤ ì´ë¦„(ì—†ìœ¼ë©´ deviceUniqueIdentifierë¡œ ëŒ€ì²´)")]
     [SerializeField] private string userIdPrefKey = "USER_ID";
 
-    [Header("Format")]
-    [Tooltip("ÃÊ±îÁö Ç¥½ÃÇÒÁö")]
-    [SerializeField] private bool includeSeconds = true;
-
-    // ¿ÜºÎ¿¡¼­ ÇÊ¿äÇÏ¸é ±¸µ¶ÇØ¼­ ¡°ÁöÁ¤ÀÚ È®Á¤¡± ÀÌº¥Æ®¸¦ ¹ŞÀ» ¼ö ÀÖ°Ô
+    // ì§€ì •ì í™•ì • ì‹œ ì™¸ë¶€ì— ì•Œë¦¬ëŠ” ì´ë²¤íŠ¸
     public event Action<string> OnAssigneeConfirmed;
 
     private void Awake()
     {
-        // ¹öÆ°Àº ±âº» ¼û±è
+        // ë²„íŠ¼(í† ê¸€)ì€ ê¸°ë³¸ ìˆ¨ê¹€
         if (assigneeCheckButton != null)
             assigneeCheckButton.gameObject.SetActive(false);
 
-        // ÀÔ·Â º¯È­¿¡ µû¶ó ¹öÆ° ³ëÃâ Åä±Û
+        // ì…ë ¥ ë³€í™”ì— ë”°ë¼ ë²„íŠ¼(í† ê¸€) ë…¸ì¶œ ê²°ì •
         if (assigneeInput != null)
             assigneeInput.onValueChanged.AddListener(OnAssigneeChanged);
 
-        // Ã¼Å© ¹öÆ° Å¬¸¯ Ã³¸®
+        // ë²„íŠ¼(í† ê¸€) í´ë¦­ ì²˜ë¦¬
         if (assigneeCheckButton != null)
             assigneeCheckButton.onClick.AddListener(ConfirmAssignee);
     }
 
+    // í™œì„±í™” ì‹œ ë©”íƒ€ì •ë³´ ê°±ì‹  ë° ì§€ì •ì UI ìƒíƒœ ê°±ì‹  í•¨ìˆ˜
     private void OnEnable()
     {
         RefreshMetaText();
         RefreshAssigneeUI();
     }
 
+    // ì˜¤ë¸Œì íŠ¸ ì†Œë©¸ ì‹œ ì´ë²¤íŠ¸ í•´ì œ í•¨ìˆ˜ (ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ ë°©ì§€)
     private void OnDestroy()
     {
         if (assigneeInput != null)
@@ -58,20 +58,23 @@ public class MemoMetaUI : MonoBehaviour
             assigneeCheckButton.onClick.RemoveListener(ConfirmAssignee);
     }
 
+    // ë©”íƒ€ì •ë³´ í…ìŠ¤íŠ¸ ê°±ì‹  í•¨ìˆ˜
     private void RefreshMetaText()
     {
         if (metaText == null) return;
 
-        // »ç¿ëÀÚ ID: PlayerPrefs ¿ì¼±, ¾øÀ¸¸é ±â±â °íÀ¯°ª(´ëÃ¼)
+        // ì‚¬ìš©ì ID ê°€ì ¸ì˜¤ê¸° - PlayerPrefs ìš°ì„ , ì—†ìœ¼ë©´ ê¸°ê¸° ê³ ìœ ê°’
         string userId = PlayerPrefs.GetString(userIdPrefKey, "");
         if (string.IsNullOrWhiteSpace(userId))
             userId = SystemInfo.deviceUniqueIdentifier;
 
+        // í˜„ì¬ ë‚ ì§œ/ì‹œê°„ ê°€ì ¸ì˜¤ê¸°
         DateTime now = DateTime.Now;
-        string fmt = includeSeconds ? "yyyy-MM-dd HH:mm:ss" : "yyyy-MM-dd HH:mm";
+        string fmt = "yyyy-MM-dd HH:mm";
         metaText.text = $"{now.ToString(fmt)} | User: {userId}";
     }
 
+    // ì§€ì •ì UI ìƒíƒœ ê°±ì‹  í•¨ìˆ˜
     private void RefreshAssigneeUI()
     {
         if (assigneeInput == null || assigneeCheckButton == null) return;
@@ -79,15 +82,17 @@ public class MemoMetaUI : MonoBehaviour
         string text = assigneeInput.text ?? "";
         bool hasValue = !string.IsNullOrWhiteSpace(text);
 
-        // °ªÀÌ ÀÖÀ¸¸é Ã¼Å© ¹öÆ° ³ëÃâ
+        // ê°’ì´ ìˆìœ¼ë©´ ì²´í¬ ë²„íŠ¼ ë…¸ì¶œ
         assigneeCheckButton.gameObject.SetActive(hasValue);
     }
 
+    // ì§€ì •ì ì…ë ¥ ë³€í™” ì‹œ UI ìƒíƒœ ê°±ì‹  í•¨ìˆ˜
     private void OnAssigneeChanged(string value)
     {
         RefreshAssigneeUI();
     }
 
+    // ì§€ì •ì í™•ì • ì‹œ ì²˜ë¦¬ í•¨ìˆ˜
     private void ConfirmAssignee()
     {
         if (assigneeInput == null) return;
@@ -95,18 +100,10 @@ public class MemoMetaUI : MonoBehaviour
         string assignee = (assigneeInput.text ?? "").Trim();
         if (string.IsNullOrWhiteSpace(assignee)) return;
 
-        // ¡°È®Á¤¡± ½Ã UI Á¤Ã¥(¿øÇÏ¸é ¾Æ·¡ Áß ÅÃ1·Î ¹Ù²Ù¸é µÊ)
-        // 1) ÀÔ·Â Àá±×±â
-        // assigneeInput.interactable = false;
+        // ì§€ì •ì í™•ì • ì‹œ ì…ë ¥ ì ê·¸ê¸°
+        assigneeInput.interactable = false;
 
-        // 2) ¹öÆ° ¼û±â±â
-        if (assigneeCheckButton != null)
-            assigneeCheckButton.gameObject.SetActive(false);
-
-        // 3) ¿ÜºÎ¿¡ ¾Ë¸®±â(ÀúÀå ·ÎÁ÷ ¿¬°á¿ë)
+        // ì™¸ë¶€ì— ì•Œë¦¬ê¸°(ì €ì¥ ë¡œì§ ì—°ê²°ìš©)
         OnAssigneeConfirmed?.Invoke(assignee);
-
-        // µğ¹ö±× ÇÊ¿äÇÏ¸é ¿©±â¼­ ·Î±×
-        // Debug.Log($"[MemoMetaUI] Assignee confirmed: {assignee}");
     }
 }

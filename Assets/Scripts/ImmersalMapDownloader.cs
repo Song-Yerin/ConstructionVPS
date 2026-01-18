@@ -1,5 +1,5 @@
 
-// Immersal ¼­¹ö¿¡¼­ ¸Ê ÆÄÀÏÀ» ¹Ş¾Æ ±â±â ³»ºÎ ÀúÀå¼Ò¿¡ ÀúÀå (ÀÌ¹Ì °°Àº ¹öÀüÀÌ¸é X)
+// Immersal ì„œë²„ì—ì„œ ë§µ íŒŒì¼ì„ ë°›ì•„ ê¸°ê¸° ë‚´ë¶€ ì €ì¥ì†Œì— ì €ì¥ (ì´ë¯¸ ê°™ì€ ë²„ì „ì´ë©´ X)
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -8,70 +8,70 @@ using UnityEngine.Networking;
 public class ImmersalMapDownloader : MonoBehaviour
 {
     [Header("Map File Download URL")]
-    [Tooltip("¸Ê ÆÄÀÏ ´Ù¿î·Îµå URL ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ë§µ íŒŒì¼ ë‹¤ìš´ë¡œë“œ URL ë„£ëŠ” ìë¦¬")]
     [SerializeField] private string mapUrl = "https://your-domain.com/maps/myMap.bytes";
 
     [Header("persistentDataPath File Name")]
-    [Tooltip("±â±â³»ºÎ ÀúÀå¼Ò¿¡ ÀúÀåµÉ ÆÄÀÏ¸í")]
+    [Tooltip("ê¸°ê¸°ë‚´ë¶€ ì €ì¥ì†Œì— ì €ì¥ë  íŒŒì¼ëª…")]
     [SerializeField] private string persistentFileName = "myMap.bytes";
 
-    [Header("¸Ê ÆÄÀÏÀ» Ç×»ó ´Ù½Ã ¹ŞÀ»Áö ¼±ÅÃ")]
-    [Tooltip("true¸é ¹«Á¶°Ç ´Ù½Ã ´Ù¿î·Îµå")]
+    [Header("ë§µ íŒŒì¼ì„ í•­ìƒ ë‹¤ì‹œ ë°›ì„ì§€ ì„ íƒ")]
+    [Tooltip("trueë©´ ë¬´ì¡°ê±´ ë‹¤ì‹œ ë‹¤ìš´ë¡œë“œ")]
     [SerializeField] private bool forceRedownload = false;
 
 
-    // ´Ù¿î·Îµå ¿Ï·á ¿©ºÎ¸¦ ´Ù¸¥ ½ºÅ©¸³Æ®°¡ ±â´Ù¸± ¼ö ÀÖ°Ô °ø°³
+    // ë‹¤ìš´ë¡œë“œ ì™„ë£Œ ì—¬ë¶€ë¥¼ ë‹¤ë¥¸ ìŠ¤í¬ë¦½íŠ¸ê°€ ê¸°ë‹¤ë¦´ ìˆ˜ ìˆê²Œ ê³µê°œ
 
-    // ´Ù¿î·Îµå ¿Ï·á ¿©ºÎ¸¦ ¿ÜºÎ¿¡¼­ È®ÀÎ ÇÒ ¼ö ÀÖµµ·Ï
+    // ë‹¤ìš´ë¡œë“œ ì™„ë£Œ ì—¬ë¶€ë¥¼ ì™¸ë¶€ì—ì„œ í™•ì¸ í•  ìˆ˜ ìˆë„ë¡
     public bool IsReady { get; private set; } 
     public string PersistentFullPath { get; private set; }
 
-    // ¸Ê ¹öÀü Å°¸¦  È®ÀÎÇÒ ¼ö ÀÖµµ·Ï > ¹öÀüÀÌ °°À¸¸é Àç´Ù¿î·Îµå ¾È ÇÔ
+    // ë§µ ë²„ì „ í‚¤ë¥¼  í™•ì¸í•  ìˆ˜ ìˆë„ë¡ > ë²„ì „ì´ ê°™ìœ¼ë©´ ì¬ë‹¤ìš´ë¡œë“œ ì•ˆ í•¨
     private const string EtagKeyPrefix = "IMMERSAL_MAP_ETAG_";
 
 
-    private IEnumerator Start() // ¸Ê ÆÄÀÏ ´Ù¿î·Îµå¿Í ³ª¸ÓÁö ±â´ÉÀ» º´·Ä·Î ½ÇÇàÇÏ±â À§ÇØ
+    private IEnumerator Start() // ë§µ íŒŒì¼ ë‹¤ìš´ë¡œë“œì™€ ë‚˜ë¨¸ì§€ ê¸°ëŠ¥ì„ ë³‘ë ¬ë¡œ ì‹¤í–‰í•˜ê¸° ìœ„í•´
     {
-        // ´Ù¿î·Îµå ¿©ºÎ ÃÊ±âÈ­ > OS¿¡ ¸Â°Ô ÆÄÀÏ °æ·Î ¼³Á¤
+        // ë‹¤ìš´ë¡œë“œ ì—¬ë¶€ ì´ˆê¸°í™” > OSì— ë§ê²Œ íŒŒì¼ ê²½ë¡œ ì„¤ì •
         IsReady = false;
         PersistentFullPath = Path.Combine(Application.persistentDataPath, persistentFileName);
 
-        // ´Ù¿î·Îµå ½Ãµµ
+        // ë‹¤ìš´ë¡œë“œ ì‹œë„
         yield return DownloadIfNeeded();
         IsReady = File.Exists(PersistentFullPath);
 
-        //´Ù¿î·Îµå ¿©ºÎ¿Í °æ·Î Ãâ·Â
+        //ë‹¤ìš´ë¡œë“œ ì—¬ë¶€ì™€ ê²½ë¡œ ì¶œë ¥
         Debug.Log($"[MapDownloader] Ready={IsReady}, Path={PersistentFullPath}");
     }
 
 
-    // ¸Ê ÆÄÀÏ ´Ù¿î·Îµå ¼öÇà ÇÔ¼ö
+    // ë§µ íŒŒì¼ ë‹¤ìš´ë¡œë“œ ìˆ˜í–‰ í•¨ìˆ˜
     private IEnumerator DownloadIfNeeded()
     {
-        // º¯°æ µÆÀ» ¶§¿¡¸¸ ¹öÀü Å°¸¦ ¹Ş±â
+        // ë³€ê²½ ëì„ ë•Œì—ë§Œ ë²„ì „ í‚¤ë¥¼ ë°›ê¸°
         string etagKey = EtagKeyPrefix + persistentFileName;
         string savedEtag = PlayerPrefs.GetString(etagKey, "");
 
-        if (forceRedownload) // °­Á¦ ´Ù¿î·Îµå °¡´ÉÇÏ°Ô ÇÏ±â À§ÇÔ
+        if (forceRedownload) // ê°•ì œ ë‹¤ìš´ë¡œë“œ ê°€ëŠ¥í•˜ê²Œ í•˜ê¸° ìœ„í•¨
             savedEtag = "";
 
-        // ¼­¹ö¿¡ ¸Ê ÆÄÀÏ ¿äÃ»
+        // ì„œë²„ì— ë§µ íŒŒì¼ ìš”ì²­
         using (var req = UnityWebRequest.Get(mapUrl))
         {
-            // ¹öÀü Å° ÀÖÀ¸¸é Ãß°¡ÇØ¼­ ¿äÃ»
+            // ë²„ì „ í‚¤ ìˆìœ¼ë©´ ì¶”ê°€í•´ì„œ ìš”ì²­
             if (!string.IsNullOrEmpty(savedEtag))
                 req.SetRequestHeader("If-None-Match", savedEtag);
 
-            // ¿äÃ» Á¦ÇÑ ½Ã°£ ¼³Á¤
+            // ìš”ì²­ ì œí•œ ì‹œê°„ ì„¤ì •
             req.timeout = 30; 
 
-            //¿äÃ» URL°ú ¹öÀü Å° ºñ±³°ª Ãâ·Â
+            //ìš”ì²­ URLê³¼ ë²„ì „ í‚¤ ë¹„êµê°’ ì¶œë ¥
             Debug.Log($"[MapDownloader] GET {mapUrl} (If-None-Match={savedEtag})");
 
-            // ¼­¹ö ¿äÃ»
+            // ì„œë²„ ìš”ì²­
             yield return req.SendWebRequest();
 
-            // 1. ¿äÃ» ½ÇÆĞ Ã³¸®
+            // 1. ìš”ì²­ ì‹¤íŒ¨ ì²˜ë¦¬
             bool is304 = req.responseCode == 304;
             if (req.result != UnityWebRequest.Result.Success && !is304)
             {
@@ -79,14 +79,14 @@ public class ImmersalMapDownloader : MonoBehaviour
                 yield break;
             }
 
-            // 2. º¯°æ »çÇ× ¾øÀ½ Ã³¸®
+            // 2. ë³€ê²½ ì‚¬í•­ ì—†ìŒ ì²˜ë¦¬
             if (is304)
             {
                 Debug.Log("[MapDownloader] Not modified (304). Use cached file.");
                 yield break;
             }
 
-            // 3. »õ ÆÄÀÏ ÁÙ ¶§ Ã³¸® 
+            // 3. ìƒˆ íŒŒì¼ ì¤„ ë•Œ ì²˜ë¦¬ 
             byte[] bytes = req.downloadHandler.data;
             if (bytes == null || bytes.Length == 0)
             {
@@ -94,7 +94,7 @@ public class ImmersalMapDownloader : MonoBehaviour
                 yield break;
             }
 
-            // ÀÓ½Ã ÆÄÀÏ¿¡ ÀúÀå ÈÄ ÀÌµ¿(ºÎºĞ ´Ù¿î·Îµå/Áß°£ Á¾·á ´ëºñ)
+            // ì„ì‹œ íŒŒì¼ì— ì €ì¥ í›„ ì´ë™(ë¶€ë¶„ ë‹¤ìš´ë¡œë“œ/ì¤‘ê°„ ì¢…ë£Œ ëŒ€ë¹„)
             string tmpPath = PersistentFullPath + ".tmp";
             try
             {
@@ -105,7 +105,7 @@ public class ImmersalMapDownloader : MonoBehaviour
 
                 File.Move(tmpPath, PersistentFullPath);
 
-                // »õ ¹öÀü Å° ÀúÀå
+                // ìƒˆ ë²„ì „ í‚¤ ì €ì¥
                 string newEtag = req.GetResponseHeader("ETag");
                 if (!string.IsNullOrEmpty(newEtag))
                 {
@@ -117,11 +117,11 @@ public class ImmersalMapDownloader : MonoBehaviour
                 Debug.Log($"[MapDownloader] Saved file: {PersistentFullPath} ({bytes.Length} bytes)");
             }
 
-            // ÆÄÀÏ ÀúÀå ½ÇÆĞ ½Ã Ã³¸® 
+            // íŒŒì¼ ì €ì¥ ì‹¤íŒ¨ ì‹œ ì²˜ë¦¬ 
             catch (System.SystemException e)
             {
                 Debug.LogError($"[MapDownloader] Save failed: {e}");
-                // temp Á¤¸®
+                // temp ì •ë¦¬
                 if (File.Exists(tmpPath)) File.Delete(tmpPath);
             }
         }

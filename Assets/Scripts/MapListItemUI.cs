@@ -1,6 +1,6 @@
 
-// ¸Ê ¸ñ·Ï ¸®½ºÆ® UIÇÁ¸®ÆÕÀÇ ÅØ½ºÆ® »ı¼º ¹× ÀúÀå
-// MapBrowserManagerÄÚµåÀÇ AddItemToUI ¸Ş¼­µå¸¦ UI ÇÁ¸³ÆÕ¿¡ ¿¬°á
+// ë§µ ëª©ë¡ ë¦¬ìŠ¤íŠ¸ UIí”„ë¦¬íŒ¹ì˜ í…ìŠ¤íŠ¸ ìƒì„± ë° ì €ì¥
+// MapBrowserManagerì½”ë“œì˜ AddItemToUI ë©”ì„œë“œë¥¼ UI í”„ë¦½íŒ¹ì— ì—°ê²°
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,22 +9,22 @@ using System;
 public class MapListItemUI : MonoBehaviour
 {
     [Header("UI")]
-    [Tooltip("¸Ê ÀÌ¸§ÀÌ Ç¥½ÃµÉ ÅØ½ºÆ® ÄÄÆ÷³ÍÆ®¸¦ ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ë§µ ì´ë¦„ì´ í‘œì‹œë  í…ìŠ¤íŠ¸ ì»´í¬ë„ŒíŠ¸ë¥¼ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text subText;
     [SerializeField] private Button button;
 
-    // »ı¼ºµÈ ÇÁ¸®ÆÕ¿¡ ÀúÀåµÇ´Â °ª
-    private int _mapIdInt;            // ¼­¹ö¿ÍÀÇ ¸Ê ID ºñ±³ À§ÇÔ
-    private string _mapIdStr;         // ¾À ³» ¸Ê ID ÀúÀå À§ÇÔ
-    private string _mapName;          // ¾À ³» ¸Ê ÀÌ¸§ ÀúÀå À§ÇÔ
+    // ìƒì„±ëœ í”„ë¦¬íŒ¹ì— ì €ì¥ë˜ëŠ” ê°’
+    private int _mapIdInt;            // ì„œë²„ì™€ì˜ ë§µ ID ë¹„êµ ìœ„í•¨
+    private string _mapIdStr;         // ì”¬ ë‚´ ë§µ ID ì €ì¥ ìœ„í•¨
+    private string _mapName;          // ì”¬ ë‚´ ë§µ ì´ë¦„ ì €ì¥ ìœ„í•¨
 
-    // Å¬¸¯½Ã ½ÇÇàÇÒ ÇÔ¼ö¸¦ ÀúÀå - ÀÎÀÚ ¸í½Ã ¾øÀ½/ÀÖÀ½ µÎ °¡Áö ¹öÀü Áö¿ø À§ÇÔ
+    // í´ë¦­ì‹œ ì‹¤í–‰í•  í•¨ìˆ˜ë¥¼ ì €ì¥ - ì¸ì ëª…ì‹œ ì—†ìŒ/ìˆìŒ ë‘ ê°€ì§€ ë²„ì „ ì§€ì› ìœ„í•¨
     private Action _onClickSimple;
     private Action<string, string> _onClickWithStrings;
 
-    // MapBrowserManager°¡ UI ÇÁ¸®ÆÕ¿¡ µ¥ÀÌÅÍ ³ÖÀ» ¶§ È£ÃâÇÏ´Â ¸Ş¼­µå
-    // Å¬¸¯ ÇÔ¼ö 1 (ÀÎÀÚ ¸í½Ã ¾øÀ½)
+    // MapBrowserManagerê°€ UI í”„ë¦¬íŒ¹ì— ë°ì´í„° ë„£ì„ ë•Œ í˜¸ì¶œí•˜ëŠ” ë©”ì„œë“œ
+    // í´ë¦­ í•¨ìˆ˜ 1 (ì¸ì ëª…ì‹œ ì—†ìŒ)
     public void Bind(int mapId, string mapName, Action onClick)
     {
         _mapIdInt = mapId;
@@ -41,7 +41,7 @@ public class MapListItemUI : MonoBehaviour
         });
     }
 
-    // Å¬¸¯ ÇÔ¼ö 2 (ÀÎÀÚ ¸í½Ã ÀÖÀ½)
+    // í´ë¦­ í•¨ìˆ˜ 2 (ì¸ì ëª…ì‹œ ìˆìŒ)
     public void Bind(string mapId, string mapName, Action<string, string> onClick)
     {
         _mapIdStr = mapId ?? "";
@@ -49,11 +49,11 @@ public class MapListItemUI : MonoBehaviour
         _onClickWithStrings = onClick;
         _onClickSimple = null;
 
-        // int·Î ÆÄ½Ì °¡´ÉÇÏ¸é ÀúÀå
+        // intë¡œ íŒŒì‹± ê°€ëŠ¥í•˜ë©´ ì €ì¥
         if (!int.TryParse(_mapIdStr, out _mapIdInt))
             _mapIdInt = -1;
 
-        // UI ÅØ½ºÆ® °»½Å ¹× ½ÇÇà µ¿ÀÛ Àü´Ş
+        // UI í…ìŠ¤íŠ¸ ê°±ì‹  ë° ì‹¤í–‰ ë™ì‘ ì „ë‹¬
         ApplyTexts(_mapName, _mapIdStr);
         WireButton(() =>
         {
@@ -62,25 +62,25 @@ public class MapListItemUI : MonoBehaviour
         });
     }
 
-    // UI ÅØ½ºÆ® °»½Å ÇÔ¼ö
+    // UI í…ìŠ¤íŠ¸ ê°±ì‹  í•¨ìˆ˜
     private void ApplyTexts(string name, string idStr)
     {
         if (titleText) titleText.text = string.IsNullOrEmpty(name) ? "(Unnamed Map)" : name;
         if (subText) subText.text = $"Map ID: {idStr}";
     }
 
-    // ¹öÆ° Å¬¸¯ µ¿ÀÛ ¿¬°á ÇÔ¼ö
+    // ë²„íŠ¼ í´ë¦­ ë™ì‘ ì—°ê²° í•¨ìˆ˜
     private void WireButton(Action clickAction)
     {
-        if (!button) button = GetComponent<Button>(); // ¹öÆ° ÄÄÆ÷³ÍÆ® ÀÚµ¿ ÂüÁ¶ À§ÇÔ
+        if (!button) button = GetComponent<Button>(); // ë²„íŠ¼ ì»´í¬ë„ŒíŠ¸ ìë™ ì°¸ì¡° ìœ„í•¨
 
         if (!button) 
         {
-            Debug.LogError("[MapListItemUI] Button reference is missing. Inspector¿¡ ButtonÀ» ³Ö°Å³ª °°Àº ¿ÀºêÁ§Æ®¿¡ Button ÄÄÆ÷³ÍÆ®¸¦ Ãß°¡ÇÏ¼¼¿ä.");
+            Debug.LogError("[MapListItemUI] Button reference is missing. Inspectorì— Buttonì„ ë„£ê±°ë‚˜ ê°™ì€ ì˜¤ë¸Œì íŠ¸ì— Button ì»´í¬ë„ŒíŠ¸ë¥¼ ì¶”ê°€í•˜ì„¸ìš”.");
             return;
         }
 
-        // Å¬¸¯ ¸®½º³Ê ÃÊ±âÈ­ ÈÄ »õ µ¿ÀÛ ¿¬°á
+        // í´ë¦­ ë¦¬ìŠ¤ë„ˆ ì´ˆê¸°í™” í›„ ìƒˆ ë™ì‘ ì—°ê²°
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => clickAction?.Invoke());
     }

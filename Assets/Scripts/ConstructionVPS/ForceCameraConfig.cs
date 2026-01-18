@@ -1,5 +1,5 @@
 
-// AR Ä«¸Ş¶ó ÇØ»óµµ¸¦ 720p·Î °­Á¦ ¼³Á¤ (¾ÈÁ¤¼º Çâ»ó ¸ñÀû)
+// AR ì¹´ë©”ë¼ í•´ìƒë„ë¥¼ 720pë¡œ ê°•ì œ ì„¤ì • (ì•ˆì •ì„± í–¥ìƒ ëª©ì )
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
@@ -9,31 +9,31 @@ using UnityEngine.XR.ARSubsystems;
 public class ForceCameraConfig : MonoBehaviour
 {
     [Header("ARCameraManager Cam")]
-    [Tooltip("ARCameraManagerÄÄÆ÷³ÍÆ®¸¦ ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ARCameraManagerì»´í¬ë„ŒíŠ¸ë¥¼ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private ARCameraManager cam;
 
-    // ARCameraManager ÁØºñµÇ¸é ÇØ»óµµ °­Á¦ ¼³Á¤ ½Ãµµ
+    // ARCameraManager ì¤€ë¹„ë˜ë©´ í•´ìƒë„ ê°•ì œ ì„¤ì • ì‹œë„
     private void OnEnable()
     {
         if (!cam)
         {
-            // ArCameraManagerÄÄÆ÷³ÍÆ® Å½»ö
-            cam = GetComponent<ARCameraManager>();   // ¿ÀºêÁ§Æ®¿¡ ÀÖÀ¸¸é ±×°É ¿ì¼± À§ÇÔ
+            // ArCameraManagerì»´í¬ë„ŒíŠ¸ íƒìƒ‰
+            cam = GetComponent<ARCameraManager>();   // ì˜¤ë¸Œì íŠ¸ì— ìˆìœ¼ë©´ ê·¸ê±¸ ìš°ì„  ìœ„í•¨
             if (!cam) cam = FindObjectOfType<ARCameraManager>();
         }
 
-        // AR Ä«¸Ş¶ó ¼­ºê½Ã½ºÅÛÀÌ ÁØºñµÇ´Â ½ÃÁ¡±îÁö ±â´Ù·È´Ù°¡ Àû¿ë
+        // AR ì¹´ë©”ë¼ ì„œë¸Œì‹œìŠ¤í…œì´ ì¤€ë¹„ë˜ëŠ” ì‹œì ê¹Œì§€ ê¸°ë‹¤ë ¸ë‹¤ê°€ ì ìš©
         if (cam) StartCoroutine(ApplyWhenReady());
     }
 
-    // AR Ä«¸Ş¶ó ¼­ºê½Ã½ºÅÛÀÌ ÁØºñµÉ ¶§±îÁö ´ë±â ¹× Àû¿ë ÇÔ¼ö
+    // AR ì¹´ë©”ë¼ ì„œë¸Œì‹œìŠ¤í…œì´ ì¤€ë¹„ë  ë•Œê¹Œì§€ ëŒ€ê¸° ë° ì ìš© í•¨ìˆ˜
     private IEnumerator ApplyWhenReady()
     {
-        // subsystem ÁØºñµÉ ¶§±îÁö ´ë±â
+        // subsystem ì¤€ë¹„ë  ë•Œê¹Œì§€ ëŒ€ê¸°
         while (cam.subsystem == null || !cam.subsystem.running)
             yield return null;
 
-        // (±¸¼º ¸ñ·ÏÀÌ ÇÑµÎ ÇÁ·¹ÀÓ µÚ¿¡ Ã¤¿öÁö´Â °æ¿ì°¡ ÀÖ¾î) Àç½Ãµµ
+        // (êµ¬ì„± ëª©ë¡ì´ í•œë‘ í”„ë ˆì„ ë’¤ì— ì±„ì›Œì§€ëŠ” ê²½ìš°ê°€ ìˆì–´) ì¬ì‹œë„
         for (int tries = 0; tries < 30; tries++)
         {
             var configs = cam.GetConfigurations(Allocator.Temp);
@@ -49,10 +49,10 @@ public class ForceCameraConfig : MonoBehaviour
         }
     }
 
-    // 720p ÇØ»óµµ·Î ¼³Á¤ ½Ãµµ ÇÔ¼ö
+    // 720p í•´ìƒë„ë¡œ ì„¤ì • ì‹œë„ í•¨ìˆ˜
     private void TrySet720p(NativeArray<XRCameraConfiguration> configs)
     {
-        // 1280x720(¶Ç´Â 720x1280) ¿ì¼±, ¾øÀ¸¸é °¡Àå ³·Àº ÇØ»óµµ
+        // 1280x720(ë˜ëŠ” 720x1280) ìš°ì„ , ì—†ìœ¼ë©´ ê°€ì¥ ë‚®ì€ í•´ìƒë„
         XRCameraConfiguration best = configs[0];
         bool found720 = false;
 
@@ -71,12 +71,12 @@ public class ForceCameraConfig : MonoBehaviour
                 break;
             }
 
-            // 720p ¾øÀ¸¸é °¡Àå ³·Àº ÇØ»óµµ·Î ¼±ÅÃ
+            // 720p ì—†ìœ¼ë©´ ê°€ì¥ ë‚®ì€ í•´ìƒë„ë¡œ ì„ íƒ
             if (!found720 && (c.width * c.height) < (best.width * best.height))
                 best = c;
         }
 
-        // ARCameraManager¿¡ ¼±ÅÃÇÑ ÇØ»óµµ Àû¿ë
+        // ARCameraManagerì— ì„ íƒí•œ í•´ìƒë„ ì ìš©
         cam.currentConfiguration = best;
     }
 }

@@ -1,54 +1,54 @@
 
-// URP·»´õ È¯°æ Ä«¸Ş¶ó¸¦ ÁöÁ¤ÇÑ »ö»ó°ú ±íÀÌ·Î °­Á¦ ¸ÂÃã
-// ÇÁ·¹ÀÓ ÀÜ»ó/±ôºıÀÓ Á¦°Å À§ÇÔ
+// URPë Œë” í™˜ê²½ ì¹´ë©”ë¼ë¥¼ ì§€ì •í•œ ìƒ‰ìƒê³¼ ê¹Šì´ë¡œ ê°•ì œ ë§ì¶¤
+// í”„ë ˆì„ ì”ìƒ/ê¹œë¹¡ì„ ì œê±° ìœ„í•¨
 using UnityEngine;
 using UnityEngine.Rendering;
 
-// ÇØ´ç Å¬·¡½º°¡ °¡Àå ¸ÕÀú ½ÇÇàµÇµµ·Ï ¼³Á¤
+// í•´ë‹¹ í´ë˜ìŠ¤ê°€ ê°€ì¥ ë¨¼ì € ì‹¤í–‰ë˜ë„ë¡ ì„¤ì •
 [DefaultExecutionOrder(-10000)]
 
 public class ForceCameraClearURP : MonoBehaviour
 {
     [Header("Render Cam")]
-    [Tooltip("°­Á¦ ¼³Á¤ÇÒ Ä«¸Ş¶ó¸¦ ³Ö´Â ÀÚ¸®")]
+    [Tooltip("ê°•ì œ ì„¤ì •í•  ì¹´ë©”ë¼ë¥¼ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private Camera targetCamera;
 
-    [Tooltip("ÁöÁ¤ Ä«¸Ş¶óÀÇ Depth°ªÀ» ÃÊ±âÈ­ ÇÒÁö")]
+    [Tooltip("ì§€ì • ì¹´ë©”ë¼ì˜ Depthê°’ì„ ì´ˆê¸°í™” í• ì§€")]
     [SerializeField] private bool clearDepth = true;
 
-    [Tooltip("ÁöÁ¤ Ä«¸Ş¶óÀÇ »ö»ó°ªÀ» ÃÊ±âÈ­ ÇÒÁö")]
+    [Tooltip("ì§€ì • ì¹´ë©”ë¼ì˜ ìƒ‰ìƒê°’ì„ ì´ˆê¸°í™” í• ì§€")]
     [SerializeField] private bool clearColor = true;
 
-    [Tooltip("ÃÊ±âÈ­ ½Ã ±âº» »öÀ» °ËÀº»öÀ¸·Î")]
+    [Tooltip("ì´ˆê¸°í™” ì‹œ ê¸°ë³¸ ìƒ‰ì„ ê²€ì€ìƒ‰ìœ¼ë¡œ")]
     [SerializeField] private Color clearTo = Color.black;
 
-    // targetCamera¸¦ ÇöÀç ¿ÀºêÁ§Æ®ÀÇ Ä«¸Ş¶ó·Î ¼³Á¤
+    // targetCameraë¥¼ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ì¹´ë©”ë¼ë¡œ ì„¤ì •
     private void Reset()
     {
         targetCamera = GetComponent<Camera>();
     }
 
-    // ·»´õ¸µ ½ÃÀÛ ½ÃÁ¡¿¡ °­Á¦ ¼³Á¤ µî·Ï   
+    // ë Œë”ë§ ì‹œì‘ ì‹œì ì— ê°•ì œ ì„¤ì • ë“±ë¡   
     private void OnEnable()
     {
         if (!targetCamera) targetCamera = GetComponent<Camera>();
         RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
     }
 
-    // °­Á¦ ¼³Á¤ ÇØÁ¦
+    // ê°•ì œ ì„¤ì • í•´ì œ
     private void OnDisable()
     {
         RenderPipelineManager.beginCameraRendering -= OnBeginCameraRendering;
     }
 
-    // ·»´õ¸µ ½ÃÀÛ ½ÃÁ¡¿¡ °­Á¦ ¼³Á¤ ½ÇÇà ÇÔ¼ö
+    // ë Œë”ë§ ì‹œì‘ ì‹œì ì— ê°•ì œ ì„¤ì • ì‹¤í–‰ í•¨ìˆ˜
     private void OnBeginCameraRendering(ScriptableRenderContext context, Camera cam)
     {
-        // ´ë»ó Ä«¸Ş¶óÀÎÁö ÆÇ´Ü
+        // ëŒ€ìƒ ì¹´ë©”ë¼ì¸ì§€ íŒë‹¨
         if (!targetCamera) return;
         if (cam != targetCamera) return;
 
-        // (ÁöÁ¤ÇÑ °ªÀ¸·Î) °­Á¦ ÃÊ±âÈ­
+        // (ì§€ì •í•œ ê°’ìœ¼ë¡œ) ê°•ì œ ì´ˆê¸°í™”
         var cmd = CommandBufferPool.Get("Force Clear");
         cmd.ClearRenderTarget(clearDepth, clearColor, clearTo);
         context.ExecuteCommandBuffer(cmd);

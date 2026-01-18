@@ -1,32 +1,36 @@
 
-// ÆĞ³ÎÀÌ ÄÑÁú ¶§ Å°º¸µå È°¼ºÈ­ ¹× ÅØ½ºÆ® ÀÔ·Â ÇÊµå¿¡ Æ÷Ä¿½º ÁÖ±â
+// íŒ¨ë„ì´ ì¼œì§ˆ ë•Œ í‚¤ë³´ë“œ í™œì„±í™” ë° í…ìŠ¤íŠ¸ ì…ë ¥ í•„ë“œì— í¬ì»¤ìŠ¤ ì£¼ê¸°
 using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class TextMemoAutoFocus : MonoBehaviour
 {
+    [Header("Text Memo Input Field")]
+    [Tooltip("í¬ì»¤ìŠ¤ë¥¼ ì£¼ê³ ì í•˜ëŠ” TMP_InputFieldë¥¼ ë„£ëŠ” ìë¦¬")]
     [SerializeField] private TMP_InputField inputField;
 
+    // íŒ¨ë„ì´ í™œì„±í™”ë  ë•Œ ìë™ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     private void OnEnable()
     {
-        // ÆĞ³Î È°¼ºÈ­ ÇÁ·¹ÀÓ¿¡ UI ·¹ÀÌ¾Æ¿ôÀÌ ¾ÆÁ÷ ¾È ÀâÈù °æ¿ì°¡ ÀÖ¾î 1ÇÁ·¹ÀÓ ´ë±â ÈÄ Æ÷Ä¿½º
         StartCoroutine(FocusNextFrame());
     }
 
+    // í¬ì»¤ìŠ¤ ì‹¤í–‰ í•¨ìˆ˜
     private IEnumerator FocusNextFrame()
     {
         yield return null;
 
         if (!inputField) yield break;
 
+        // ì…ë ¥ í•„ë“œ í™œì„±í™”
         inputField.interactable = true;
 
-        // Æ÷Ä¿½º + Ä¿¼­ È°¼ºÈ­ (´ëºÎºĞÀÇ ¾Èµå·ÎÀÌµå¿¡¼­ ¿©±â¼­ Å°º¸µå°¡ ÀÚµ¿À¸·Î ¶ä)
+        // í¬ì»¤ìŠ¤ + í‚¤ë³´ë“œ í™œì„±í™”
         inputField.Select();
         inputField.ActivateInputField();
 
-        // ±×·¡µµ Å°º¸µå°¡ ¾È ¶ß´Â ±â±â/¼³Á¤ ´ëºñ(¿É¼Ç)
+        // ê·¸ë˜ë„ í‚¤ë³´ë“œê°€ ì•ˆ ëœ¨ëŠ” ê¸°ê¸° ê°•ì œë¡œ ë„ìš°ê¸°
         if (TouchScreenKeyboard.isSupported && TouchScreenKeyboard.visible == false)
         {
             TouchScreenKeyboard.Open(
